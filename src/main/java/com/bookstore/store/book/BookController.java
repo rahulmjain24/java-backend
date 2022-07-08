@@ -23,6 +23,7 @@ public class BookController {
         return bookService.getBooks(page);
     }
 
+    @CrossOrigin
     @GetMapping(path = "{id}")
     public Optional<Book> getBookById(@PathVariable("id") int bookId) {
         return bookService.getBook(bookId);
