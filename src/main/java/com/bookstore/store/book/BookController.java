@@ -24,6 +24,9 @@ public class BookController {
     }
 
     @CrossOrigin
+    @GetMapping(params = "title")
+    public List<Book> getBookByTitle(@RequestParam String title) {return  bookService.getBookByTitle(title);}
+    @CrossOrigin
     @GetMapping(path = "{id}")
     public Optional<Book> getBookById(@PathVariable("id") int bookId) {
         return bookService.getBook(bookId);

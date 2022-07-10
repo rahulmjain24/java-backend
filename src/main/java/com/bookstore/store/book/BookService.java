@@ -22,9 +22,13 @@ public class BookService {
         return bookRepository.findAll(PageRequest.of(a,8));
     }
 
+
+    public List<Book> getBookByTitle(String title) {return bookRepository.findAllByTitleLike("%"+title+"%");}
+
     public Optional<Book> getBook(int id) {
         return bookRepository.findById(id);
     }
+
 
     public void addNewBook(Book book) {
         System.out.println(book);
