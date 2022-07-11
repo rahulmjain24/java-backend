@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name="books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="book_id")
     private int id;
 
@@ -24,6 +24,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Author author;
 
     @ManyToOne

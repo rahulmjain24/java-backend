@@ -32,7 +32,7 @@ public class BookService {
 
     public void addNewBook(Book book) {
         System.out.println(book);
-        //bookRepository.save(book);
+        bookRepository.save(book);
     }
 
 }
