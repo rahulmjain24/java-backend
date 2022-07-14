@@ -1,9 +1,13 @@
 package com.bookstore.store.user;
 
+import com.bookstore.store.book.Book;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -27,6 +31,15 @@ public class User {
 
     @Column(name = "gender")
     private String gender;
+
+    @ManyToMany
+    @JoinTable(
+            name = "books_bought",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private Set<Book> booksBought = new HashSet<>();;
+
 
 //    @Column(name = "enabled")
 //    private boolean enabled;
@@ -82,6 +95,10 @@ public class User {
         return gender;
     }
 
+    public Set<Book> getBooks() {
+        return booksBought;
+    }
+
 //    public Timestamp getCreatedAt() {
 //        return createdAt;
 //    }
@@ -104,6 +121,14 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public void addBook(Book book) {
+        booksBought.add(book);
+    }
+
+    public void removeBook(Book book) {
+        booksBought.remove(book);
     }
 
 //    public void setCreatedAt(Timestamp createdAt) {

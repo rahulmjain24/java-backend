@@ -21,6 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    private RestAuthEntryPoint restAuthEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -31,10 +32,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/users/**").authenticated()
                 .antMatchers("/").permitAll()
+                //.antMatchers("/api/users/**").authenticated()
+                .and().exceptionHandling().authenticationEntryPoint(restAuthEntryPoint)
                 .and().formLogin()
                 .loginPage("/login")
+                .loginProcessingUrl("/loginhere")
                 .permitAll()
                 .and()
                 .logout()
@@ -44,8 +47,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/the_js_path/**");
+    }
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 }
+
+

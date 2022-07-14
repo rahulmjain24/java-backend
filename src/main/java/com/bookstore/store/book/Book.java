@@ -2,8 +2,12 @@ package com.bookstore.store.book;
 
 import com.bookstore.store.author.Author;
 import com.bookstore.store.genre.Genre;
+import com.bookstore.store.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="books")
@@ -22,16 +26,38 @@ public class Book {
     @Column(name = "synopsis")
     private String synopsis;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", referencedColumnName = "author_id")
     private Author author;
 
-    @ManyToOne
-    @JoinColumn(name = "genre_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "genre_id", referencedColumnName = "genre_id")
     private Genre genre;
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "booksBought")
+    private Set<User> users = new HashSet<>();
+
+
+
     public Book() {
+    }
+
+
+
+    public Book(String title, int year, Author author, Genre genre) {
+        this.title = title;
+        this.year = year;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    public Book(String title, int year, String synopsis, Author author, Genre genre) {
+        this.title = title;
+        this.year = year;
+        this.synopsis = synopsis;
+        this.author = author;
+        this.genre = genre;
     }
 
     public String getSynopsis() {
@@ -47,21 +73,6 @@ public class Book {
     }
 
     public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-
-    public Book(String title, int year, Author author, Genre genre) {
-        this.title = title;
-        this.year = year;
-        this.author = author;
-        this.genre = genre;
-    }
-
-    public Book(String title, int year, String synopsis, Author author, Genre genre) {
-        this.title = title;
-        this.year = year;
-        this.synopsis = synopsis;
-        this.author = author;
         this.genre = genre;
     }
 
@@ -95,6 +106,10 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public Set<User> getUsers() {
+        return users;
     }
 
     @Override
