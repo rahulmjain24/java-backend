@@ -69,4 +69,9 @@ public class UserController {
     public User removeBook(@RequestParam int bookId,Principal principal) {
         return userService.removeBookFromUser(principal.getName(), bookId);
     }
+
+    @DeleteMapping(path = "/user/deleteAll")
+    public User removeAllBooks(Principal principal) {
+        return userService.removeAllBooksFromUser(principal.getName());
+    }
 }

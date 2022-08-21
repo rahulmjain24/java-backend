@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -130,6 +131,8 @@ public class User {
     public void removeBook(Book book) {
         booksBought.remove(book);
     }
+
+    public void removeAllBooks() {booksBought.clear();}
 
 //    public void setCreatedAt(Timestamp createdAt) {
 //        this.createdAt = createdAt;

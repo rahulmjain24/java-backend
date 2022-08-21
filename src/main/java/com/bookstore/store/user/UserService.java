@@ -90,4 +90,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User removeAllBooksFromUser(String name) {
+        User user = userRepository.findByUsername(name).get();
+        user.removeAllBooks();
+        return userRepository.save(user);
+    }
+
 }
